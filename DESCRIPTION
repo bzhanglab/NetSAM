@@ -1,0 +1,15 @@
+Package: NetSAM
+Type: Package
+Title: Network Seriation And Modularization
+Version: 0.99.2
+Date: 2013-06-13
+Author: Jing Wang <jing.wang.2@vanderbilt.edu>
+Maintainer: Bing Zhang <bing.zhang@vanderbilt.edu>
+Description: The NetSAM (Network Seriation and Modularization) package takes an edge-list representation of a network as an input, performs network seriation and modularization analysis, and generates as files that can be used as an input for the one-dimensional network visualization tool NetGestalt (http://www.netgestalt.org) or other network analysis. 
+License: LGPL
+LazyLoad: yes
+Depends: R (>= 2.15.1), methods, igraph (>= 0.6-1), seriation (>=
+        1.0-6), graph (>= 1.34.0), org.Hs.eg.db (>= 2.8.0)
+Imports: methods, igraph, seriation, graph, org.Hs.eg.db
+Suggests: RUnit, BiocGenerics
+Collate: zzz.R NetSAM.R
