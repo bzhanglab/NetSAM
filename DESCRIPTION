@@ -1,7 +1,7 @@
 Package: NetSAM
 Type: Package
 Title: Network Seriation And Modularization
-Version: 1.0.0
+Version: 1.2.0
 Date: 2013-06-13
 Author: Jing Wang <jing.wang.2@vanderbilt.edu>
 Maintainer: Bing Zhang <bing.zhang@vanderbilt.edu>
