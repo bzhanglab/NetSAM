@@ -44,10 +44,10 @@ pdfborder=0 0 0 }
 
 \section{Introduction}
 
-The last decade of systems biology research has demonstrated that networks rather than individual genes govern the onset and progression of complex diseases. Meanwhile, real-world complex networks usually exhibit hierarchical organization, in which nodes can be combined into groups that can be further combined into larger groups, and so on over multiple scales. Thus, identifying the hierarchical organization of a network becomes indispensable in complex disease studies. A traditional and useful method for revealing hierarchical architecture of network is hierarchical clustering, which groups data over a variety of scales by creating a hierarchical tree. However, hierarchical clustering has three major limitations. First, there are many different leaf node orderings consistent with the structure of a hierarchical tree, and hierarchical clustering does not optimize the ordering. Secondly, hierarchical clustering does not assess the statistical significance of the modular organization of a network. Finally, it does not specify relevant hierarchical levels and modules at different scales. To address these limitations, we developed the NetSAM (Network Seriation and Modularization) package which will identify the hierarchical modules from a network (network modularization) and find a suitable linear order for all leaves of the identified hierarchical organization (network seriation). NetSAM takes an edge-list representation of a network as an input and generates as files that can be used as an input for the one-dimensional network visualization tool NetGestalt (\href{http://www.netgestalt.org}{http://www.netgestalt.org}) or other network analysis. NetSAM uses random walk distance-based hierarchical clustering to identify the hierarchical modules of the network and then uses the optimal leaf ordering (OLO) method to optimize the one-dimensional ordering of the genes in each module by minimizing the sum of the pair-wise random walk distance of adjacent genes in the ordering.
+The last decade of systems biology research has demonstrated that networks rather than individual genes govern the onset and progression of complex diseases. Meanwhile, real-world complex networks usually exhibit hierarchical organization, in which nodes can be combined into groups that can be further combined into larger groups, and so on over multiple scales. Thus, identifying the hierarchical organization of a network becomes indispensable in complex disease studies. A traditional and useful method for revealing hierarchical architecture of network is hierarchical clustering, which groups data over a variety of scales by creating a hierarchical tree. However, hierarchical clustering has three major limitations. First, there are many different leaf node orderings consistent with the structure of a hierarchical tree, and hierarchical clustering does not optimize the ordering. Secondly, hierarchical clustering does not assess the statistical significance of the modular organization of a network. Finally, it does not specify relevant hierarchical levels and modules at different scales. To address these limitations, we developed the NetSAM (Network Seriation and Modularization) package which will identify the hierarchical modules from a network (network modularization) and find a suitable linear order for all leaves of the identified hierarchical organization (network seriation). NetSAM takes an edge-list representation of a network as an input and generates as files that can be used as an input for the one-dimensional network visualization tool NetGestalt (\href{http://www.netgestalt.org}{http://www.netgestalt.org}) or other network analysis. NetSAM uses random walk distance-based hierarchical clustering to identify the hierarchical modules of the network and then uses the optimal leaf ordering (OLO) method to optimize the one-dimensional ordering of the genes in each module by minimizing the sum of the pair-wise random walk distance of adjacent genes in the ordering. The detailed description of the NetSAM method can be found in our recently published Nature Methods paper "NetGestalt: integrating multidimensional omics data over biological networks" (http://www.nature.com/nmeth/journal/v10/n7/full/nmeth.2517.html). 
 
 \section{Environment}
-NetSAM requires R version 2.15.1 or later, which can be downloaded from the website \href{http://www.r-project.org/}{http://www.r-project.org/}. Because the seriation step requires pair-wise distance between all nodes, NetSAM is memory consuming. We recommend to use the 64 bit version of R to run the NetSAM. For networks with less than 10,000 nodes, we recommend to use a computer with 8GB memory. Using our computer with 2.7 GHz Intel Core i5 processor and 8 GB 1333 MHz DDR3 memory, NetSAM took 402 seconds to analyze the HPRD network (\href{http://www.hprd.org}{http://www.hprd.org}) with 9198 nodes. For networks with more than 10,000 nodes, a computer with at least 16GB memory is recommended. NetSAM requires the following packages: igraph ($>$=0.6-1), seriation ($>$=1.0-6), graph ($>$=1.34.0) and org.Hs.eg.db ($>$=2.8.0), which can be installed as follows.
+NetSAM requires R version 2.15.1 or later, which can be downloaded from the website \href{http://www.r-project.org/}{http://www.r-project.org/}. Because the seriation step requires pair-wise distance between all nodes, NetSAM is memory consuming. We recommend to use the 64 bit version of R to run the NetSAM. For networks with less than 10,000 nodes, we recommend to use a computer with 8GB memory. Using our computer with 2.7 GHz Intel Core i5 processor and 8 GB 1333 MHz DDR3 memory, NetSAM took 402 seconds to analyze the HPRD network (\href{http://www.hprd.org}{http://www.hprd.org}) with 9198 nodes. For networks with more than 10,000 nodes, a computer with at least 16GB memory is recommended. NetSAM requires the following packages: igraph ($>$=0.6-1), seriation ($>$=1.0-6) and graph ($>$=1.34.0), which can be installed as follows.
 
 $>$install.packages("igraph")
 
@@ -56,8 +56,6 @@ $>$install.packages("seriation")
 $>$source("http://bioconductor.org/biocLite.R")
 
 $>$biocLite("graph")
-
-$>$biocLite("org.Hs.eg.db")
 
 \section{Network Seriation and Modularization}
 After building up the basic environment mentioned above, the users can install the NetSAM package and use it to analyze networks.
@@ -69,7 +67,7 @@ inputNetwork <- system.file("extdata","exampleNetwork.txt",package="NetSAM")
 cat("The input network can be also a data object, such as graphNEL object.\n")
 data(inputNetwork)
 outputFileName <- paste(getwd(),"/NetSAM",sep="")
-result <- NetSAM(inputNetwork, outputFileName, NetGestalt=TRUE, minModule=(-1), maxStep=4, 
+result <- NetSAM(inputNetwork, outputFileName, minModule=(-1), maxStep=4, 
 method="Modularity Cutoff", ModularityThr=0.2, ZRandomNum=10, permuteNum=100, pThr=0.05)
 @
 
@@ -77,8 +75,7 @@ method="Modularity Cutoff", ModularityThr=0.2, ZRandomNum=10, permuteNum=100, pT
 This section describes the arguments of the NetSAM function:
 
       1. \emph{inputNetwork} is the network under analysis, which can be the name of the input network file in the edge-list format (each row represents an edge with two node names separated by a tab or space) or be a data object in R (data object must be graphNEL class or data.frame (or matrix) class with two columns). 
-	If parameter \emph{NetGestalt} is TRUE, the output file will be used as NetGestalt input. Because current version NetGestalt only support official Human HUGO gene symbols, the node names of the input network must be official Human HUGO gene symbols. If only less than 20 percentage of the node names in the input file are not official HUGO gene symbols, the function will remove the edges involving these node names. If more than 20 percentage of the node names in the input file are not official HUGO gene symbols, the function will consider the input file invalid and the user should convert the node names to official HUGO gene symbols. If parameter \emph{NetGestalt} is FALSE, the output file will be used as other network analysis. Thus, the users can use any type of identifiers as node names of the input network.
-
+	
       2. \emph{outputFileName} is the name of the output file. If no file path is provided, the output file will be saved to the current path.
 
      
@@ -97,12 +94,6 @@ This section describes the arguments of the NetSAM function:
       9. \emph{pThr} is the significance level for determining whether a network has non-random internal modular organization for the "ZScore" or "Permutation" methods.
 
 \subsection{Output}
-When \emph{NetGestalt} is TRUE, the NetSAM function outputs a "nsm" file that can be used as an input for the one-dimensional network visualization tool NetGestalt (\href{http://www.netgestalt.org}{http://www.netgestalt.org}). Meanwhile, the NetSAM function also outputs a list object in R which contains all information in "nsm" file.
-
-When \emph{NetGestalt} is FALSE, the NetSAM function outputs three files to make users easily analyze the network. 
-1. "*.gmt" file contains all modules found by the NetSAM function. The first column is the hierarchical label which implies the module position in the hierarchical tree. For example, "01-04" means the module is the fourth child of the parent module "01" (root module). The second columns is the number of genes contains in the module. And other columns are the genes in the module. All columns are separated by tab.
-2. "*.rul" file contains all genes in the network which are reordered by OLO method.
-3. "*.net" file contains the network under analysis which is a simple network by removing the self interactions and loop interactions from the input network.
-The NetSAM function also outputs a list object in R which contains all information in three files.
+The NetSAM function outputs a "nsm" file that can be used as an input for the one-dimensional network visualization tool NetGestalt (\href{http://www.netgestalt.org}{http://www.netgestalt.org}). Meanwhile, the NetSAM function also outputs a list object in R which contains all information in "nsm" file.
 	
 \end{document}

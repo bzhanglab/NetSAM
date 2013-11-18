@@ -1,5 +1,5 @@
 NetSAM <-
-function(inputNetwork, outputFileName, NetGestalt=TRUE, minModule=(-1), maxStep=4, method="Modularity Cutoff", ModularityThr=0.2, ZRandomNum=10, permuteNum=100, pThr=0.05){
+function(inputNetwork, outputFileName, minModule=(-1), maxStep=4, method="Modularity Cutoff", ModularityThr=0.2, ZRandomNum=10, permuteNum=100, pThr=0.05){
 	
 	calculateRandomWalkerAdjectMatrix <- function(network_igraph,step){
 		
@@ -356,9 +356,9 @@ function(inputNetwork, outputFileName, NetGestalt=TRUE, minModule=(-1), maxStep=
 		}
 	}
 	
-	require(igraph) || stop("Package igraph version 0.6 is required!")
-	require(seriation) || stop("Package seriation version 1.0-10 is required!")
-	require(graph) || stop("Package graph version 1.34.0 is required!")
+	#require(igraph) || stop("Package igraph version 0.6 is required!")
+	#require(seriation) || stop("Package seriation version 1.0-10 is required!")
+	#require(graph) || stop("Package graph version 1.34.0 is required!")
 	
 	
 	
@@ -424,26 +424,26 @@ function(inputNetwork, outputFileName, NetGestalt=TRUE, minModule=(-1), maxStep=
 	
 	#if the outputfile is used for NetGestalt (NetGestalt is TRUE), the inputfile should only contain official gene symbols
 	
-	if(NetGestalt==TRUE){
+	#if(NetGestalt==TRUE){
 		
-		require(org.Hs.eg.db) || stop("Package org.Hs.eg.dbs version 2.8.0 is required!")
+		#require(org.Hs.eg.db) || stop("Package org.Hs.eg.dbs version 2.8.0 is required!")
 		#genesymbolPath <- system.file("extdata","Hsapiens_gene_symbol.txt",package="NetSAM")
 		#cat(genesymbolPath,"\n")
 		#genesymbol <- read.table(genesymbolPath,header=F,sep="\t",stringsAsFactors=F)
 		#cat("all genesymbol:",nrow(genesymbol),"\n")
 		#genesymbol <- as.vector(as.matrix(genesymbol))
-		genesymbol <- keys(org.Hs.egSYMBOL2EG)
+		#genesymbol <- keys(org.Hs.egSYMBOL2EG)
 		
-		overlap_genesymbol_networkP <- intersect(proteinInNetwork, genesymbol)
-		if(length(overlap_genesymbol_networkP) != length(proteinInNetwork)){
-			if(length(overlap_genesymbol_networkP)>(0.8*length(proteinInNetwork))){
-				network <- induced.subgraph(network,overlap_genesymbol_networkP)
-				cat("After removing IDs which are not official HUGO Symbols, Network has ",vcount(network)," nodes and ",ecount(network)," edges\n",sep="")
-			}else{
-				stop("Over 20% IDs in the inputted network are not official Human HUGO Symbols. Please first transform IDs to official HUGO Symbols and then run NetSAM!\n")
-			}
-		}
-	}
+		#overlap_genesymbol_networkP <- intersect(proteinInNetwork, genesymbol)
+		#if(length(overlap_genesymbol_networkP) != length(proteinInNetwork)){
+        #if(length(overlap_genesymbol_networkP)>(0.8*length(proteinInNetwork))){
+        #	network <- induced.subgraph(network,overlap_genesymbol_networkP)
+        #	cat("After removing IDs which are not official HUGO Symbols, Network has ",vcount(network)," nodes and ",ecount(network)," edges\n",sep="")
+		#	}else{
+		#		stop("Over 20% IDs in the inputted network are not official Human HUGO Symbols. Please first transform IDs to official HUGO Symbols and then run NetSAM!\n")
+		#	}
+		#}
+        #}
 	
 	cat("\nIdentifying the hierarchical modules of the network...\n\n")
 	overlap_genesymbol_networkP <- V(network)$name
@@ -495,13 +495,13 @@ function(inputNetwork, outputFileName, NetGestalt=TRUE, minModule=(-1), maxStep=
 	
 	hmiFile <- createHMIFile(subnetworkInfo,geneorder)
 	
-	if(NetGestalt==FALSE){
-		gmtFile <- createGMTFile(hmiFile,geneorder)
-	}
+	#if(NetGestalt==FALSE){
+	#	gmtFile <- createGMTFile(hmiFile,geneorder)
+	#}
 	
 	network_edges <- get.edgelist(network)
 	
-	if(NetGestalt==TRUE){
+	#if(NetGestalt==TRUE){
 		outputFile <- paste(outputFileName,".nsm",sep="")
 		note <- "##  Ruler file  ##"
 		write.table(note,file=outputFile,row.names=F,col.names=F,quote=F)
@@ -517,16 +517,16 @@ function(inputNetwork, outputFileName, NetGestalt=TRUE, minModule=(-1), maxStep=
 
 		cat("Processing completed!\n\n") 
 		return(netgestalt)
-	}else{
-		outputFile1 <- paste(outputFileName,".gmt",sep="")
-		write.table(gmtFile,file=outputFile1,row.names=F,col.names=F,sep="\t",quote=F)
-		outputFile2 <- paste(outputFileName,".rul",sep="")
-		write.table(geneorder,file=outputFile2,row.names=F,col.names=T,sep="\t",quote=F)
-		outputFile3 <- paste(outputFileName,".net",sep="")
-		write.table(network_edges,file=outputFile3,row.names=F,col.names=T,sep="\t",quote=F)
-		result <- list(gmtfile=gmtFile,rul=geneorder,network=network_edges)
-		cat("Processing completed!\n\n") 
-		return(result)
-	}
+        #}else{
+		#outputFile1 <- paste(outputFileName,".gmt",sep="")
+		#write.table(gmtFile,file=outputFile1,row.names=F,col.names=F,sep="\t",quote=F)
+		#outputFile2 <- paste(outputFileName,".rul",sep="")
+		#write.table(geneorder,file=outputFile2,row.names=F,col.names=T,sep="\t",quote=F)
+		#outputFile3 <- paste(outputFileName,".net",sep="")
+		#write.table(network_edges,file=outputFile3,row.names=F,col.names=T,sep="\t",quote=F)
+		#result <- list(gmtfile=gmtFile,rul=geneorder,network=network_edges)
+		#cat("Processing completed!\n\n")
+		#return(result)
+        #}
 }
 

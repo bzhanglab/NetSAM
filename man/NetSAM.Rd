@@ -10,7 +10,7 @@
 }
 
 \usage{
-NetSAM(inputNetwork, outputFileName, NetGestalt=TRUE, minModule = (-1), maxStep = 4, method = "Modularity Cutoff", ModularityThr = 0.2, ZRandomNum = 10, permuteNum = 100, pThr = 0.05)
+NetSAM(inputNetwork, outputFileName, minModule = (-1), maxStep = 4, method = "Modularity Cutoff", ModularityThr = 0.2, ZRandomNum = 10, permuteNum = 100, pThr = 0.05)
 }
 
 \arguments{
@@ -19,9 +19,6 @@ NetSAM(inputNetwork, outputFileName, NetGestalt=TRUE, minModule = (-1), maxStep 
   }
   \item{outputFileName}{
 	The name of the output file. If no file path is provided, the output file will be saved to the current path.
-  }
-  \item{NetGestalt}{
-  	If NetGestalt is TRUE, the output file will be used as NetGestalt input. Because current version NetGestalt only support official Human HUGO gene symbols, the node names of the input network must be official Human HUGO gene symbols. If only less than 20% of the node names in the input file are not official HUGO gene symbols, the function will remove the edges involving these node names. If more than 20% of the node names in the input file are not official HUGO gene symbols, the function will consider the input file invalid and the user should convert the node names to official HUGO gene symbols. If NetGestalt is FALSE, the output file will be used as other network analysis. Thus, the users can use any type of identifiers as node names of the input network.
   }
   \item{minModule}{
 	The minimum number of nodes for a module (or minimum module size). If the size of a module identified by the function is less than the specified number, the module will not be further partitioned into sub-modules. The default is -1 which means NetSAM will set \code{minModule} as 5 or 0.3 percent of the number of nodes in the input network, whichever is larger.
@@ -60,7 +57,7 @@ NetSAM(inputNetwork, outputFileName, NetGestalt=TRUE, minModule = (-1), maxStep 
 	cat("The input network can be also a data object, such as graphNEL object.\n")
 	data(inputNetwork)
 	outputFileName <- paste(getwd(),"/NetSAM",sep="")
-	result <- NetSAM(inputNetwork, outputFileName, NetGestalt=TRUE, minModule = (-1), maxStep = 4, method = "Modularity Cutoff", ModularityThr = 0.2, ZRandomNum = 10, permuteNum = 100, pThr = 0.05)
+	result <- NetSAM(inputNetwork, outputFileName, minModule = (-1), maxStep = 4, method = "Modularity Cutoff", ModularityThr = 0.2, ZRandomNum = 10, permuteNum = 100, pThr = 0.05)
 }
 
 \keyword{ methods }
