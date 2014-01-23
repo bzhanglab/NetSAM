@@ -12,8 +12,8 @@
 	\tabular{ll}{
 		Package: \tab NetSAM\cr
 		Type: \tab Package\cr
-		Version: \tab 1.0.0\cr
-		Date: \tab 2013-07-10\cr
+		Version: \tab 1.3.0\cr
+		Date: \tab 2014-01-23\cr
 		License: \tab LGPL\cr
 		LazyLoad: \tab yes\cr
 	}
@@ -25,7 +25,7 @@
 }
 
 \references{
-	NetGestalt: integrating multidimensional omics data over biological networks. Nature Methods 10, 597Ð598 (2013).
+	NetGestalt: integrating multidimensional omics data over biological networks. Nature Methods 10, 597-598 (2013).
 }
 
 \seealso{
