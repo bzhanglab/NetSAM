@@ -1,0 +1,12 @@
+import(methods, AnnotationDbi, igraph, WGCNA, snow, doSNOW, foreach, biomaRt, GO.db, R2HTML, survival, DBI)
+importFrom(tools, file_ext)
+importFrom(DBI, dbGetQuery)
+importFrom(seriation, seriate, get_order)
+importFrom("grDevices", "dev.off", "pdf")
+  importFrom("graphics", "curve", "hist", "plot")
+  importFrom("stats", "IQR", "aov", "as.dendrogram", "as.dist", "coef",
+             "cor.test", "dist", "hclust", "kruskal.test", "lm",
+             "median", "order.dendrogram", "p.adjust", "phyper", "pnorm",
+             "pt", "sd", "t.test", "wilcox.test")
+  importFrom("utils", "read.csv", "read.table", "write.table")
+export(NetSAM, NetAnalyzer, mapToSymbol, MatNet, MatSAM, testFileFormat, featureAssociation, GOAssociation, mergeDuplicate)
