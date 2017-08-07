@@ -1,16 +1,5 @@
 NetSAM <-
 function(inputNetwork, outputFileName, outputFormat="nsm", edgeType="unweighted", map_to_genesymbol=FALSE, organism="hsapiens", idType="auto", minModule=0.003, stepIte=FALSE, maxStep=4, moduleSigMethod="cutoff", modularityThr=0.2, ZRanNum=10, PerRanNum=100, ranSig=0.05, edgeThr=(-1), nodeThr=(-1), nThreads=3){
-	
-    
-    #require(igraph) || stop("Package igraph version 0.6 is required!")
-	#require(seriation) || stop("Package seriation version 1.0-10 is required!")
-	#require(graph) || stop("Package graph version 1.40.1 is required!")
-    #require(WGCNA) || stop("Package WGCNA version 1.34.0 is required!")
-    #require(doSNOW) || stop("Package doSNOW version 1.0.6 is required!")
-    #require(foreach) || stop("Package foreach version 1.4.0 is required!")
-    #require(multicore) || stop("Package multicore version 0.1-7 is required!")
-    #require(tools) || stop("Package tools version 3.0.0 is required!")
-    
     organisms <- c("hsapiens","mmusculus","rnorvegicus","drerio","celegans","scerevisiae","cfamiliaris","dmelanogaster","athaliana")
     names(organisms) <- c("Hs","Mm","Rn","Dr","Ce","Sc","Cf","Dm","At")
     
@@ -530,7 +519,7 @@ function(network, minModule, stepIte, maxStep, moduleSigMethod, modularityThr, Z
 
         
         cl <- makeCluster(threNum)
-        registerDoSNOW(cl)
+        registerDoParallel(cl)
 
         
         i <- 1
@@ -613,7 +602,7 @@ function(network, minModule, stepIte, maxStep, moduleSigMethod, modularityThr, Z
 
 
         cl <- makeCluster(threNum)
-        registerDoSNOW(cl)
+        registerDoParallel(cl)
         
         ranmodu <- foreach(i=1:threNum, .combine="c", .packages="igraph") %dopar%{
             
@@ -660,7 +649,7 @@ function(network, minModule, stepIte, maxStep, moduleSigMethod, modularityThr, Z
 
         
         cl <- makeCluster(threNum)
-        registerDoSNOW(cl)
+        registerDoParallel(cl)
         
         ranmodu <- foreach(i=1:threNum, .combine="c", .packages="igraph") %dopar%{
             
@@ -720,7 +709,7 @@ function(network, minModule, stepIte, maxStep, moduleSigMethod, modularityThr, Z
         }
         
         cl <- makeCluster(threNum)
-        registerDoSNOW(cl)
+        registerDoParallel(cl)
         
         ranmodu <- foreach(i=1:threNum, .combine="c", .packages="igraph") %dopar%{
             
@@ -772,7 +761,7 @@ function(network, minModule, stepIte, maxStep, moduleSigMethod, modularityThr, Z
         }
        
         cl <- makeCluster(threNum)
-        registerDoSNOW(cl)
+        registerDoParallel(cl)
         
         ranmodu <- foreach(i=1:threNum, .combine="c", .packages="igraph") %dopar%{
             

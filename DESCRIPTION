@@ -1,10 +1,10 @@
 Package: NetSAM
 Type: Package
 Title: Network Seriation And Modularization
-Version: 2.0.3
-Date: 2016-11-29
+Version: 2.0.4
+Date: 2017-08-07
 Author: Jing Wang <jing.wang@bcm.edu>
-Maintainer: Jing Wang <jing.wang.2@vanderbilt.edu>
+Maintainer: Zhiao Shi <zhiao.shi@gmail.com>
 Description: The NetSAM (Network Seriation and Modularization) package takes an edge-list representation of a weighted or unweighted network as an input, performs network seriation and modularization analysis, and generates as files that can be used as an input for the one-dimensional network visualization tool NetGestalt (http://www.netgestalt.org) or other network analysis. The NetSAM package can also generate correlation network (e.g. co-expression network) based on the input matrix data, perform seriation and modularization analysis for the correlation network and calculate the associations between the sample features and modules or identify the associated GO terms for the modules.
 License: LGPL
 LazyLoad: yes
@@ -16,7 +16,7 @@ Imports: methods, AnnotationDbi (>= 1.28.0), snow (>= 0.4-1), doSNOW
 Suggests: RUnit, BiocGenerics, org.Sc.sgd.db, org.Hs.eg.db,
         org.Mm.eg.db, org.Rn.eg.db, org.Dr.eg.db, org.Ce.eg.db,
         org.Cf.eg.db, org.Dm.eg.db, org.At.tair.db
-Collate: zzz.R NetSAM.R NetAnalyzer.R MatNet.R MatSAM.R mapToSymbol.R
+Collate: zzz.R NetSAM.R NetAnalyzer.R MatNet.R MatSAM.R consensusNet.R mapToSymbol.R
         testFileFormat.R featureAssociation.R GOAssociation.R
         mergeDuplicate.R
 NeedsCompilation: no
