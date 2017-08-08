@@ -15,9 +15,11 @@ Imports: methods, AnnotationDbi (>= 1.28.0), snow (>= 0.4-1), doSNOW
         2.10.0), R2HTML (>= 2.2.0), DBI (>= 0.5-1)
 Suggests: RUnit, BiocGenerics, org.Sc.sgd.db, org.Hs.eg.db,
         org.Mm.eg.db, org.Rn.eg.db, org.Dr.eg.db, org.Ce.eg.db,
-        org.Cf.eg.db, org.Dm.eg.db, org.At.tair.db
+        org.Cf.eg.db, org.Dm.eg.db, org.At.tair.db, knitr,
+    rmarkdown
 Collate: zzz.R NetSAM.R NetAnalyzer.R MatNet.R MatSAM.R consensusNet.R mapToSymbol.R
         testFileFormat.R featureAssociation.R GOAssociation.R
         mergeDuplicate.R
 NeedsCompilation: no
-Packaged: 2017-03-01 22:51:00 UTC; jingwang
+VignetteBuilder: knitr
+Packaged: 2017-08-07 22:51:00 UTC; zhiaos
