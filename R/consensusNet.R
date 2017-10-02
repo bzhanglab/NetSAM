@@ -1,4 +1,4 @@
-consensusNet <- function(data, organism="hsapiens",bootstrapNum=100,meanPer=0.8,varPer=0.8,method="rank_unsig",value=3/1000,pth=1e-6, outputFile,nThreads=3){
+consensusNet <- function(data, organism="hsapiens",bootstrapNum=100, naPer=0.5, meanPer=0.8,varPer=0.8,method="rank_unsig",value=3/1000,pth=1e-6, outputFile,nThreads=3){
 
 #  entrezId <- IDMapping(organism=organism,dataType="list",
 #                       inputGene=rownames(data), sourceIdType="genesymbol", 
@@ -19,15 +19,15 @@ consensusNet <- function(data, organism="hsapiens",bootstrapNum=100,meanPer=0.8,
     ranData <- data[,ransample]
 
     if(method=="rank"){
-      ranNetwork <- MatNet(inputMat=ranData,meanPer=meanPer,varPer=varPer,corrType="spearman",matNetMethod=method,rankBest=value)
+      ranNetwork <- MatNet(inputMat=ranData, naPer=naPer, meanPer=meanPer,varPer=varPer,corrType="spearman",matNetMethod=method,rankBest=value)
     }
 
     if(method=="value"){
-      ranNetwork <- MatNet(inputMat=ranData,meanPer=meanPer,varPer=varPer,corrType="spearman",matNetMethod=method,valueThr=value)
+      ranNetwork <- MatNet(inputMat=ranData, naPer=naPer, meanPer=meanPer,varPer=varPer,corrType="spearman",matNetMethod=method,valueThr=value)
     }
 
     if(method=="rank_unsig"){
-      ranNetwork <- MatNet(inputMat=ranData,meanPer=meanPer,varPer=varPer,corrType="spearman",matNetMethod="rank",rankBest=value,netFDRThr=1)
+      ranNetwork <- MatNet(inputMat=ranData, naPer=naPer, meanPer=meanPer,varPer=varPer,corrType="spearman",matNetMethod="rank",rankBest=value,netFDRThr=1)
     }
     return(ranNetwork)
   }
