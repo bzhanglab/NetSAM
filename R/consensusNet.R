@@ -1,4 +1,9 @@
-consensusNet <- function(data, organism="hsapiens",bootstrapNum=100, naPer=0.5, meanPer=0.8,varPer=0.8,method="rank_unsig",value=3/1000,pth=1e-6, outputFile,nThreads=3){
+consensusNet <- function(data, organism="hsapiens",bootstrapNum=100, naPer=0.5, meanPer=0.8,varPer=0.8,method="rank_unsig",value=3/1000,pth=1e-6, 
+                         outputFile, nMatNet=2, nThreads=4){
+# there are two levels of parallelism here
+# level 1: the number of concurrent running MatNet processes
+# level 2: for each MatNet process, how many threads can be use 
+
 
 #  entrezId <- IDMapping(organism=organism,dataType="list",
 #                       inputGene=rownames(data), sourceIdType="genesymbol", 
@@ -8,7 +13,7 @@ consensusNet <- function(data, organism="hsapiens",bootstrapNum=100, naPer=0.5, 
 #  data <- data[entrezId[,1],]
 #  rownames(data) <- entrezId[,4]
 
-  cl <- makeCluster(nThreads, outfile="")
+  cl <- makeCluster(nMatNet, outfile="")
   registerDoParallel(cl)
 
   sampleName <- colnames(data)
@@ -19,15 +24,15 @@ consensusNet <- function(data, organism="hsapiens",bootstrapNum=100, naPer=0.5, 
     ranData <- data[,ransample]
 
     if(method=="rank"){
-      ranNetwork <- MatNet(inputMat=ranData, naPer=naPer, meanPer=meanPer,varPer=varPer,corrType="spearman",matNetMethod=method,rankBest=value)
+      ranNetwork <- MatNet(inputMat=ranData, naPer=naPer, meanPer=meanPer,varPer=varPer,corrType="spearman",matNetMethod=method,rankBest=value,nThreads=nThreads)
     }
 
     if(method=="value"){
-      ranNetwork <- MatNet(inputMat=ranData, naPer=naPer, meanPer=meanPer,varPer=varPer,corrType="spearman",matNetMethod=method,valueThr=value)
+      ranNetwork <- MatNet(inputMat=ranData, naPer=naPer, meanPer=meanPer,varPer=varPer,corrType="spearman",matNetMethod=method,valueThr=value,nThreads=nThreads)
     }
 
     if(method=="rank_unsig"){
-      ranNetwork <- MatNet(inputMat=ranData, naPer=naPer, meanPer=meanPer,varPer=varPer,corrType="spearman",matNetMethod="rank",rankBest=value,netFDRThr=1)
+      ranNetwork <- MatNet(inputMat=ranData, naPer=naPer, meanPer=meanPer,varPer=varPer,corrType="spearman",matNetMethod="rank",rankBest=value,netFDRThr=1,nThreads=nThreads)
     }
     return(ranNetwork)
   }
