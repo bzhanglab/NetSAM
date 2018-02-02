@@ -1,5 +1,5 @@
 consensusNet <- function(data, organism="hsapiens",bootstrapNum=100, naPer=0.5, meanPer=0.8,varPer=0.8,method="rank_unsig",value=3/1000,pth=1e-6, 
-                         outputFile, nMatNet=2, nThreads=4){
+                         nMatNet=2, nThreads=4){
 # there are two levels of parallelism here
 # level 1: the number of concurrent running MatNet processes
 # level 2: for each MatNet process, how many threads can be use 
