@@ -56,39 +56,39 @@ consensusNet <- function(data, organism="hsapiens",bootstrapNum=100, naPer=0.5, 
 
 
 .calculateConsensusNetwork <- function(ranNetList,pth){
-    bootStrapNum <- length(ranNetList)
-    ranEdgeNum <- c()
-    
-    allEdge <- c()
-    
-    for(i in c(1:bootStrapNum)){
-        ranNet <- ranNetList[[i]]
-        ranNet <- .normalizeNetwork(ranNet)
-        ranEdgeNum <- c(ranEdgeNum,nrow(ranNet))
-        
-        ranNet <- paste(ranNet[,1],ranNet[,2],sep="_")
-        allEdge <- c(allEdge,ranNet)
-    }
-    
-    totalEdgeNum <- length(unique(allEdge))
-    
-    cat("Bonferroni 0.05:",0.05/totalEdgeNum,"\n")
-    
-    prob <- ranEdgeNum/totalEdgeNum
-    
-    mu <- sum(prob)
-    sigma <- sqrt(sum(prob*(1-prob)))
-    
-    edgeRe <- table(allEdge)
-    edgeReZ <- (edgeRe-mu)/sigma
-    edgeReP <- pnorm(edgeReZ,mean=0,sd=1,lower.tail=FALSE)
-    
-    edgeReP <- edgeReP[edgeReP<pth]
-    if(length(edgeReP)==0){
-        return(NULL)
-    }else{
-        consensusNetwork <- names(edgeReP)
-        consensusNetwork <- do.call(rbind,strsplit(consensusNetwork,"_"))
-        return(consensusNetwork)
-    }
+  bootStrapNum <- length(ranNetList)
+  ranEdgeNum <- c()
+
+  allEdge <- c()
+
+  for(i in c(1:bootStrapNum)){
+    ranNet <- ranNetList[[i]]
+    ranNet <- .normalizeNetwork(ranNet)
+    ranEdgeNum <- c(ranEdgeNum,nrow(ranNet))
+
+    ranNet <- paste(ranNet[,1],ranNet[,2],sep="__")
+    allEdge <- c(allEdge,ranNet)
+  }
+
+  totalEdgeNum <- length(unique(allEdge))
+
+  cat("Bonferroni 0.05:",0.05/totalEdgeNum,"\n")
+
+  prob <- ranEdgeNum/totalEdgeNum
+
+  mu <- sum(prob)
+  sigma <- sqrt(sum(prob*(1-prob)))
+
+  edgeRe <- table(allEdge)
+  edgeReZ <- (edgeRe-mu)/sigma
+  edgeReP <- pnorm(edgeReZ,mean=0,sd=1,lower.tail=FALSE)
+
+  edgeReP <- edgeReP[edgeReP<pth]
+  if(length(edgeReP)==0){
+    return(NULL)
+  }else{
+    consensusNetwork <- names(edgeReP)
+    consensusNetwork <- do.call(rbind,strsplit(consensusNetwork,"__"))
+    return(consensusNetwork)
+  }
 }
