@@ -53,9 +53,10 @@ $>$install.packages("igraph")
 
 $>$install.packages("seriation")
 
-$>$source("http://bioconductor.org/biocLite.R")
+$>$if (!requireNamespace("BiocManager", quietly=TRUE))
+    $>$install.packages("BiocManager")
 
-$>$biocLite("graph")
+$>$BiocManager::install("graph")
 
 \section{Network Seriation and Modularization}
 After building up the basic environment mentioned above, the users can install the NetSAM package and use it to analyze networks.
