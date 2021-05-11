@@ -1000,7 +1000,3 @@ NetSAM <- function(inputNetwork, outputFileName, outputFormat="nsm", edgeType="u
   }
   return(network)
 }
-
-
-
-

@@ -12,8 +12,8 @@
 	\tabular{ll}{
 		Package: \tab NetSAM\cr
 		Type: \tab Package\cr
-		Version: \tab 2.0.3\cr
-		Date: \tab 2016-11-29\cr
+		Version: \tab 2.0.5\cr
+		Date: \tab 2018-03-05\cr
 		License: \tab LGPL\cr
 		LazyLoad: \tab yes\cr
 	}
@@ -21,7 +21,7 @@
 
 \author{
 	Jing Wang
-	Maintainer: Jing Wang <jing.wang@bcm.edu>
+	Maintainer: Zhiao Shi <zhiao.shi@gmail.com>
 }
 
 \references{
