@@ -1,2 +1,10 @@
 ^doc$
 ^Meta$
+.DS_store
+.gitignore
+.git
+.Rapp.history
+.Rbuildignore
+.Rhistory
+^.*\.Rproj$
+^\.Rproj\.user$
