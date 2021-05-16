@@ -13,7 +13,7 @@
 		Package: \tab NetSAM\cr
 		Type: \tab Package\cr
 		Version: \tab 1.31.1\cr
-		Date: \tab 2018-03-05\cr
+		Date: \tab 2021-05-15\cr
 		License: \tab LGPL\cr
 		LazyLoad: \tab yes\cr
 	}

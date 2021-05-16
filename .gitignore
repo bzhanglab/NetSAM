@@ -26,3 +26,5 @@ vignettes/*.pdf
 *.knit.md
 inst/doc
 *.swp
+doc
+Meta

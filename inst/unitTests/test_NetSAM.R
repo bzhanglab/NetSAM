@@ -5,9 +5,4 @@ test_NetSAM <- function(){
 	checkTrue(!is.na(result[1]))
 	checkTrue(!is.na(result[2]))
 	checkTrue(!is.na(result[3]))
-    
-    inputMat <- system.file("extdata","exampleExpressionData.cct",package="NetSAM")
-	matNetwork <- MatNet(inputMat)
-    
-    checkTrue(is.matrix(matNetwork))
 }

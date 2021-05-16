@@ -4,7 +4,7 @@ output:
   pdf_document:
     number_sections: yes
   html_document: default
-date: "8/8/2017"
+date: "5/15/2021"
 vignette: >
   %\VignetteIndexEntry{NetSAM User Guide}
   %\VignetteEngine{knitr::rmarkdown}
@@ -305,7 +305,7 @@ netFDRMethod="BH", netFDRThr=0.05, idNumThr=(-1), nThreads=3)
 * `inputMat` is the path to a file with extension "`.cct`" or a matrix or data.frame object. The data should have column names. If the data do not 
 have any row name, the first column of the data should be the ids.
 
-* If the input matrix data contains the duplicate ids, the function will collapse duplicate ids based on the emphcollapse mode. "`mean`", "`median`",
+* If the input matrix data contains the duplicate ids, the function will collapse duplicate ids based on the `collapse` mode. "`mean`", "`median`",
 "`maxSD`" and "`maxIQR`" represents the mean, median, max standard deviation or max interquartile range of id values in each sample respectively. The default value is "`maxSD`".
 
 * To remove ids with missing values in most of samples, the function calculates the percentage
@@ -352,6 +352,56 @@ The function supports "`spearman`" (default) or "`pearson`" method.
 ## Output
 
 The function will output a matrix with two columns.
+
+
+# Construction of consensus network
+
+To increase robustness against errors in data, a bootstrapping procedure is used to construct a consensus network.
+
+```{r}
+library("NetSAM")
+inputMatDir <- system.file("extdata","exampleExpressionData.cct",package="NetSAM")
+data <- read.table(inputMatDir, header=TRUE, row.names=1, stringsAsFactors=FALSE)
+net <- consensusNet(data=data, organism="hsapiens",bootstrapNum=10, naPer=0.5, meanPer=0.8,varPer=0.8,method="rank_unsig",value=3/1000,pth=1e-6, nMatNet=2, nThreads=4)
+```
+
+## Input
+
+* `data` should contain a file name with extension `cct` or `cbt` or a matrix or `data.frame` object in R. The first column and first row of
+    the `cct` or `cbt` file should be the row and column names, respectively and other parts are the numeric values. The detail information of
+    `cct` or `cbt` format can be found in the manual of NetGestalt ([`http://www.netgestalt.org`](http://www.netgestalt.org)). 
+    A matrix or data.frame object should have row and column names and only contain numeric or integer values. 
+
+*  `organism` is the organism of the input network. Currently, the package supports the following nine organisms: `hsapiens`, `mmusculus`,
+`rnorvegicus`, `drerio`, `celegans`, `scerevisiae`, `cfamiliaris`, `dmelanogaster` and `athaliana`. The default is "`hsapiens`".
+
+* `bootstrapNum`: Number of bootstrap data sets generated. Default is 100. 
+
+* `naPer`: To remove ids with missing values in most of samples, the function calculates the percentage of missing values in 
+  all samples for each id and removes ids with over `naPer` missing values in all samples. The default value is 0.5. 
+
+* `meanPer`:  To remove ids with low values, the function calculates the mean of values for each id in all samples and remains top `meanPer`
+  ids based on the mean.  The default value is 0.8.
+
+* `varPer`: Based on the remaining ids filtered by `meanPer`, the function can also remove less variable ids by calculating the standard deviation of values for each id in all
+ samples and remaining top `varPer` ids based on the standard deviation. The default value is 0.8.
+   
+* `method`: Method used for constructing correlation network with `MatNet`. Currently supports "rank", "value" and "rank_unsig". Default is "rank_unsig".
+
+* `value`: The corresponding value set for `method`. Default is 0.003.
+
+* `pth`:  p-value threshold for including an edge. Default is 1.0e-6.
+
+* `nMatNet`: The number of concurrent running MatNet processes, default is 2. 
+
+* `nThreads`: consensusNet function supports parallel computing based on multiple cores. The default is 4.
+  
+
+## Output
+
+The function will output a matrix with two columns.
+
+
 
 # Test input data format
 

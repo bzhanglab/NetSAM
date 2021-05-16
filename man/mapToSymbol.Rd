@@ -62,7 +62,7 @@ mapToSymbol(inputData, organism="hsapiens", inputType="genelist", idType="auto",
 	
 	###transform ids in the input network to gene symbols###
 	inputNetwork <- system.file("extdata","exampleNetwork_nonsymbol.net",package="NetSAM")
-	network_symbol <- mapToSymbol(inputData=inputNetwork,organism="hsapiens",inputType="network",idType="entrezgene",edgeType="unweighted")
+	network_symbol <- mapToSymbol(inputData=inputNetwork,organism="hsapiens",inputType="network",idType="entrezgene_id",edgeType="unweighted")
 	
 	###transform ids in the input matrix to gene symbols###
 	inputMatDir <- system.file("extdata","exampleExpressionData_nonsymbol.cct",package="NetSAM")
