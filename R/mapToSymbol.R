@@ -1,3 +1,8 @@
+.getClass <- function(obj) {
+   cls <- class(obj)
+   return(cls[1])
+}
+
 mapToSymbol <- function(inputData,organism="hsapiens",inputType="genelist",idType="auto",edgeType="unweighted", collapse_mode="maxSD", is_outputFile=FALSE, outputFileName="", verbose=TRUE){
     
     organisms <- c("hsapiens","mmusculus","rnorvegicus","drerio","celegans","scerevisiae","cfamiliaris","dmelanogaster","athaliana")
@@ -29,7 +34,7 @@ mapToSymbol <- function(inputData,organism="hsapiens",inputType="genelist",idTyp
             }
             
         }else{
-            if(class(mapresult)=="numeric"){
+            if(.getClass(mapresult)=="numeric"){
                 if(verbose==TRUE){
                     stop(paste("Only ",round(mapresult*100),"% ids can be transformed to gene symbols. Please check whether the inut idType is correct!\n",sep=""))
                 }
@@ -56,7 +61,7 @@ mapToSymbol <- function(inputData,organism="hsapiens",inputType="genelist",idTyp
             }
 
         }else{
-            if(class(mapresult)=="numeric"){
+            if(.getClass(mapresult)=="numeric"){
                 if(verbose==TRUE){
                     stop(paste("Only ",round(mapresult*100),"% ids in the input network can be transformed to gene symbols. Please check whether the inut idType is correct!\n",sep=""))
                 }
@@ -83,7 +88,7 @@ mapToSymbol <- function(inputData,organism="hsapiens",inputType="genelist",idTyp
                 stop("The ids in the input matrix can not be transformed to gene symbols! Please check whether the inut idType is correct!\n")
             }
         }else{
-            if(class(mapresult)=="numeric"){
+            if(.getClass(mapresult)=="numeric"){
                 if(verbose==TRUE){
                     stop(paste("Only ",round(mapresult*100),"% ids in the input matrix can be transformed to gene symbols. Please check whether the inut idType is correct!\n",sep=""))
                 }
@@ -140,7 +145,7 @@ mapToSymbol <- function(inputData,organism="hsapiens",inputType="genelist",idTyp
                 stop("The ids in the SCT file can not be transformed to gene symbols! Please check whether the inut idType is correct!\n")
             }
         }else{
-            if(class(mapresult)=="numeric"){
+            if(.getClass(mapresult)=="numeric"){
                 if(verbose==TRUE){
                     stop(paste("Only ",round(mapresult*100),"% ids in the SCT file can be transformed to gene symbols. Please check whether the inut idType is correct!\n",sep=""))
                 }
@@ -179,7 +184,7 @@ function(geneList, organism="hsapiens", idType="auto",verbose=TRUE){
    }
    
     
-    if(class(m)=="try-error"){
+    if(.getClass(m)=="try-error"){
         stop(paste("The function can not connect to Biomart. Please try again!\n",sep=""))
     }
     
@@ -406,7 +411,7 @@ function(inputNetwork, organism="hsapiens", idType="auto", edgeType="unweighted"
     }
     
     
-    if(class(inputNetwork)=="character"){
+    if(.getClass(inputNetwork)=="character"){
         if(file_ext(inputNetwork)!="net"){
             stop("The extension of the input file should be 'net'!\n")
         }else{
@@ -422,7 +427,7 @@ function(inputNetwork, organism="hsapiens", idType="auto", edgeType="unweighted"
             }
         }
     }else{
-        if(class(inputNetwork)=="data.frame" || class(inputNetwork)=="matrix"){
+        if(.getClass(inputNetwork)=="data.frame" || .getClass(inputNetwork)=="matrix"){
             if(edgeType=="weighted"){
                 if(ncol(inputNetwork)!=3){
                     stop("Data object should contain three columns: interactor1, interactor2 and edge weight!")
@@ -451,7 +456,7 @@ function(inputNetwork, organism="hsapiens", idType="auto", edgeType="unweighted"
             rm(inputNetwork,inputNetwork_S)
             gc()
         }else{
-            if(class(inputNetwork)=="igraph"){
+            if(.getClass(inputNetwork)=="igraph"){
                 if(edgeType=="unweighted"){
                     if(!is.null(E(inputNetwork)$weight)){
                         stop("The input network contains edge weights. Please remove the edge weights or change parameter 'edgeType' to 'weigthed'!")
@@ -468,7 +473,7 @@ function(inputNetwork, organism="hsapiens", idType="auto", edgeType="unweighted"
                 rm(inputNetwork)
                 gc()
             }else{
-                if(class(inputNetwork)=="graphNEL"){
+                if(.getClass(inputNetwork)=="graphNEL"){
                     network <- igraph.from.graphNEL(inputNetwork)
                     if(edgeType=="unweighted"){
                         if(!is.null(E(network)$weight)){
@@ -495,7 +500,7 @@ function(inputNetwork, organism="hsapiens", idType="auto", edgeType="unweighted"
     if(is.null(idmap)){
         return(NULL)
     }else{
-        if(class(idmap)=="numeric"){
+        if(.getClass(idmap)=="numeric"){
             return(idmap)
         }else{
             network <- .extractSubNetwork(network,idmap[,1],edgeType)
@@ -563,7 +568,7 @@ function(inputMat, organism="hsapiens", idType="auto", collapse_mode="maxSD", ve
     idmap <- .GeneToSymbol(inputId,organism,idType,verbose)
     if(!is.null(idmap)){
         
-        if(class(idmap)=="numeric"){
+        if(.getClass(idmap)=="numeric"){
             return(idmap)
         }else{
             inputMat <- inputMat[idmap[,1],]
@@ -579,7 +584,7 @@ function(inputMat, organism="hsapiens", idType="auto", collapse_mode="maxSD", ve
 
 
 .sbtToSymbol <- function(inputFile, organism="hsapiens", idType="auto", verbose=TRUE){
-    if(class(inputFile)=="character"){
+    if(.getClass(inputFile)=="character"){
         if(file_ext(inputFile)!="sbt"){
             stop("The extension of the input file should be 'sbt'. The detail of the 'sbt' file format can be found in the NetGestalt (www.netgestalt.org)!\n")
         }else{
@@ -607,7 +612,7 @@ function(inputMat, organism="hsapiens", idType="auto", collapse_mode="maxSD", ve
         geneL <- geneL[geneL!=""]
         idmap <- .GeneToSymbol(geneL,organism,idType,verbose)
         mapNum <- c()
-        if(!is.null(idmap) && class(idmap)!="numeric"){
+        if(!is.null(idmap) && .getClass(idmap)!="numeric"){
             mappedL <- unique(idmap[,2])
             transformedData[ti,1] <- inputMat[i,1]
             transformedData[ti,2] <- inputMat[i,2]
@@ -627,7 +632,7 @@ function(inputMat, organism="hsapiens", idType="auto", collapse_mode="maxSD", ve
 
 
 .sctToSymbol <- function(inputFile, organism="hsapiens", idType="auto", verbose=TRUE, collapse_mode="min"){
-    if(class(inputFile)=="character"){
+    if(.getClass(inputFile)=="character"){
         if(file_ext(inputFile)!="sct"){
             stop("The extension of the input file should be 'sct'. The detail of the 'sct' file format can be found in the NetGestalt (www.netgestalt.org)!\n")
         }else{
@@ -656,7 +661,7 @@ function(inputMat, organism="hsapiens", idType="auto", collapse_mode="maxSD", ve
     
     if(!is.null(idmap)){
         
-        if(class(idmap)=="numeric"){
+        if(.getClass(idmap)=="numeric"){
             return(idmap)
         }else{
             inputMat <- as.matrix(inputMat[idmap[,1],])

@@ -5,7 +5,8 @@ function(inputMat,sampleAnn,NetSAMOutput,outputHtmlFile,CONMethod="spearman",CAT
     #require(survival)
     #require(R2HTML)
     
-   if(missing(inputMat) || missing(sampleAnn) || sampleAnn==""){
+   #if(missing(inputMat) || missing(sampleAnn) || sampleAnn==""){
+   if(missing(inputMat) || missing(sampleAnn)){
         stop("Please input the data matrix and sample annotation file!\n")
     }
 

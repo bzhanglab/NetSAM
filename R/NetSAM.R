@@ -1,3 +1,8 @@
+.getClass <- function(obj) {
+   cls <- class(obj)
+   return(cls[1])
+}
+
 NetSAM <- function(inputNetwork, outputFileName, outputFormat="nsm", edgeType="unweighted", map_to_genesymbol=FALSE, organism="hsapiens", idType="auto", minModule=0.003, stepIte=FALSE, maxStep=4, moduleSigMethod="cutoff", modularityThr=0.2, ZRanNum=10, PerRanNum=100, ranSig=0.05, edgeThr=(-1), nodeThr=(-1), nThreads=3){
   organisms <- c("hsapiens","mmusculus","rnorvegicus","drerio","celegans","scerevisiae","cfamiliaris","dmelanogaster","athaliana")
   names(organisms) <- c("Hs","Mm","Rn","Dr","Ce","Sc","Cf","Dm","At")
@@ -11,7 +16,7 @@ NetSAM <- function(inputNetwork, outputFileName, outputFormat="nsm", edgeType="u
   }
 
   #load Network
-  if(class(inputNetwork)=="character"){
+  if(.getClass(inputNetwork)=="character"){
     if(file_ext(inputNetwork)!="net"){
       stop("The extension of the input file should be 'net'!\n")
     }else{
@@ -27,7 +32,7 @@ NetSAM <- function(inputNetwork, outputFileName, outputFormat="nsm", edgeType="u
       }
     }
   }else{
-    if(class(inputNetwork)=="data.frame" || class(inputNetwork)=="matrix"){
+    if(.getClass(inputNetwork)=="data.frame" || .getClass(inputNetwork)=="matrix"){
       if(edgeType=="weighted"){
         if(ncol(inputNetwork)!=3){
           stop("Data object should contain three columns: interactor1, interactor2 and edge weight!")
@@ -56,7 +61,7 @@ NetSAM <- function(inputNetwork, outputFileName, outputFormat="nsm", edgeType="u
       rm(inputNetwork,inputNetwork_S)
       gc()
     }else{
-      if(class(inputNetwork)=="igraph"){
+      if(.getClass(inputNetwork)=="igraph"){
         if(edgeType=="unweighted"){
           if(!is.null(E(inputNetwork)$weight)){
             stop("The input network contains edge weights. Please remove the edge weights or change parameter 'edgeType' to 'weigthed'!")
@@ -73,7 +78,7 @@ NetSAM <- function(inputNetwork, outputFileName, outputFormat="nsm", edgeType="u
         rm(inputNetwork)
         gc()
       }else{
-        if(class(inputNetwork)=="graphNEL"){
+        if(.getClass(inputNetwork)=="graphNEL"){
           network <- igraph.from.graphNEL(inputNetwork)
           if(edgeType=="unweighted"){
             if(!is.null(E(network)$weight)){
@@ -118,7 +123,7 @@ NetSAM <- function(inputNetwork, outputFileName, outputFormat="nsm", edgeType="u
     stop("The input 'minModule' is invalid! 'minModule' should be between 0 and  0.2!\n")
   }
 
-  if(maxStep<2 || class(maxStep)!="numeric"){
+  if(maxStep<2 || .getClass(maxStep)!="numeric"){
     stop("The input 'maxStep' is invalid! 'maxStep' should be a number and larger than 2!\n")
   }
 
@@ -126,31 +131,31 @@ NetSAM <- function(inputNetwork, outputFileName, outputFormat="nsm", edgeType="u
     stop("The input 'moduleSigMethod' is invalid! Please select an option from 'cutoff','zscore' and 'permutation'!\n")
   }
 
-  if(modularityThr>1 || modularityThr<0 || class(modularityThr)!="numeric"){
+  if(modularityThr>1 || modularityThr<0 || .getClass(modularityThr)!="numeric"){
     stop("The input 'modularityThr' is invalid! 'modularityThr' should be a positive number and less than 1!\n")
   }
 
-  if(ZRanNum<10 || class(ZRanNum)!="numeric"){
+  if(ZRanNum<10 || .getClass(ZRanNum)!="numeric"){
     stop("The input 'ZRanNum' is invalid! 'ZRanNum' should be a number and larger than 10!\n")
   }
 
-  if(PerRanNum<10 || class(PerRanNum)!="numeric"){
+  if(PerRanNum<10 || .getClass(PerRanNum)!="numeric"){
     stop("The input 'PerRanNum' is invalid! 'PerRanNum' should be a number and larger than 10!\n")
   }
 
-  if(ranSig>1 || ranSig <0 || class(ranSig)!="numeric"){
+  if(ranSig>1 || ranSig <0 || .getClass(ranSig)!="numeric"){
     stop("The input 'ranSig' is invalid! 'ranSig' should be a positive number and less than 1!\n")
   }
 
-  if(edgeThr<(-1) || class(edgeThr)!="numeric"){
+  if(edgeThr<(-1) || .getClass(edgeThr)!="numeric"){
     stop("The input 'edgeThr' is invalid! 'edgeThr' should be -1 or a positive number!\n")
   }
 
-  if(nodeThr<(-1) || class(nodeThr)!="numeric"){
+  if(nodeThr<(-1) || .getClass(nodeThr)!="numeric"){
     stop("The input 'nodeThr' is invalid! 'nodeThr' should be -1 or a positive number!\n")
   }
 
-  if(nThreads<1 || class(nThreads)!="numeric"){
+  if(nThreads<1 || .getClass(nThreads)!="numeric"){
     stop("The input 'nThreads' is invalid! 'nThreads' should be a number and greater than 1!\n")
   }
 

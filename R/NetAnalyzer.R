@@ -1,3 +1,8 @@
+.getClass <- function(obj) {
+   cls <- class(obj)
+   return(cls[1])
+}
+
 NetAnalyzer <-
 function(inputNetwork, outputFileName, edgeType="unweighted"){
    
@@ -9,7 +14,7 @@ function(inputNetwork, outputFileName, edgeType="unweighted"){
     
     
     #load Network
-	if(class(inputNetwork)=="character"){
+	if(.getClass(inputNetwork)=="character"){
         if(file_ext(inputNetwork)!="net"){
             stop("The extension of the input file should be 'net'!\n")
         }else{
@@ -25,7 +30,7 @@ function(inputNetwork, outputFileName, edgeType="unweighted"){
             }
         }
 	}else{
-		if(class(inputNetwork)=="data.frame" || class(inputNetwork)=="matrix"){
+		if(.getClass(inputNetwork)=="data.frame" || .getClass(inputNetwork)=="matrix"){
             if(edgeType=="weighted"){
                 if(ncol(inputNetwork)!=3){
                     stop("Data object should contain three columns: interactor1, interactor2 and edge weight!")
@@ -54,7 +59,7 @@ function(inputNetwork, outputFileName, edgeType="unweighted"){
             rm(inputNetwork,inputNetwork_S)
             gc()
 		}else{
-			if(class(inputNetwork)=="igraph"){
+			if(.getClass(inputNetwork)=="igraph"){
                 if(edgeType=="unweighted"){
                     if(!is.null(E(inputNetwork)$weight)){
                         stop("The input network contains edge weights. Please remove the edge weights or change parameter 'edgeType' to 'weigthed'!")
@@ -71,7 +76,7 @@ function(inputNetwork, outputFileName, edgeType="unweighted"){
                 rm(inputNetwork)
                 gc()
             }else{
-                if(class(inputNetwork)=="graphNEL"){
+                if(.getClass(inputNetwork)=="graphNEL"){
                     network <- igraph.from.graphNEL(inputNetwork)
                     if(edgeType=="unweighted"){
                         if(!is.null(E(network)$weight)){

@@ -1,3 +1,8 @@
+.getClass <- function(obj) {
+   cls <- class(obj)
+   return(cls[1])
+}
+
 MatSAM <- function(inputMat, sampleAnn=NULL, outputFileName, outputFormat="msm", organism="hsapiens", map_to_symbol=FALSE, idType="auto", collapse_mode="maxSD", naPer=0.7, meanPer=0.8, varPer=0.8, corrType="spearman", matNetMethod="rank", valueThr=0.5, rankBest=0.003, networkType="signed", netFDRMethod="BH", netFDRThr=0.05, minModule=0.003, stepIte=FALSE, maxStep=4, moduleSigMethod="cutoff", modularityThr=0.2, ZRanNum=10, PerRanNum=100, ranSig=0.05, idNumThr=(-1), nThreads=3){
     
     #require(tools) || stop("Package tools version 3.0.0 is required!")
@@ -27,11 +32,11 @@ MatSAM <- function(inputMat, sampleAnn=NULL, outputFileName, outputFormat="msm",
     }
 
 
-    if(meanPer>1 || meanPer<0 || class(meanPer)!="numeric"){
+    if(meanPer>1 || meanPer<0 || .getClass(meanPer)!="numeric"){
         stop("The input 'meanPer' is invalid! 'meanPer' should be a positive number and less than 1!\n")
     }
     
-    if(varPer>1 || varPer<0 || class(varPer)!="numeric"){
+    if(varPer>1 || varPer<0 || .getClass(varPer)!="numeric"){
         stop("The input 'varPer' is invalid! 'varPer' should be a positive number and less than 1!\n")
     }
     
@@ -44,7 +49,7 @@ MatSAM <- function(inputMat, sampleAnn=NULL, outputFileName, outputFormat="msm",
 		stop("The input 'matNetMethod' is invalid! Please select a method from 'value' and 'rank'!\n")
 	}
     
-    if(valueThr>1 || valueThr<0 || class(valueThr)!="numeric"){
+    if(valueThr>1 || valueThr<0 || .getClass(valueThr)!="numeric"){
         stop("The input 'valueThr' is invalid! 'valueThr' should be a positive number and less than 1!\n")
     }
     
@@ -61,7 +66,7 @@ MatSAM <- function(inputMat, sampleAnn=NULL, outputFileName, outputFormat="msm",
 		stop("The input 'netFDRMethod' is invalid! Please select an option from 'holm','hochberg', 'hommel', 'bonferroni', 'BH', 'BY' and 'none'!\n")
 	}
     
-    if(netFDRThr>1 || class(netFDRThr)!="numeric"){
+    if(netFDRThr>1 || .getClass(netFDRThr)!="numeric"){
         stop("The input 'netFDRThr' is invalid! 'netFDRThr' should be a number and less than 1!\n")
     }
     
@@ -70,7 +75,7 @@ MatSAM <- function(inputMat, sampleAnn=NULL, outputFileName, outputFormat="msm",
         stop("The input 'minModule' is invalid! 'minModule' should be from 0 to 0.2!\n")
     }
     
-    if(maxStep<2 || class(maxStep)!="numeric"){
+    if(maxStep<2 || .getClass(maxStep)!="numeric"){
         stop("The input 'maxStep' is invalid! 'maxStep' should be a number and larger than 2!\n")
     }
     
@@ -78,27 +83,27 @@ MatSAM <- function(inputMat, sampleAnn=NULL, outputFileName, outputFormat="msm",
 		stop("The input 'moduleSigMethod' is invalid! Please select an option from 'cutoff','zscore' and 'permutation'!\n")
 	}
     
-    if(modularityThr>1 || modularityThr<0 || class(modularityThr)!="numeric"){
+    if(modularityThr>1 || modularityThr<0 || .getClass(modularityThr)!="numeric"){
         stop("The input 'modularityThr' is invalid! 'modularityThr' should be a positive number and less than 1!\n")
     }
     
-    if(ZRanNum<10 || class(ZRanNum)!="numeric"){
+    if(ZRanNum<10 || .getClass(ZRanNum)!="numeric"){
         stop("The input 'ZRanNum' is invalid! 'ZRanNum' should be a number and larger than 10!\n")
     }
     
-    if(PerRanNum<10 || class(PerRanNum)!="numeric"){
+    if(PerRanNum<10 || .getClass(PerRanNum)!="numeric"){
         stop("The input 'PerRanNum' is invalid! 'PerRanNum' should be a number and larger than 10!\n")
     }
     
-    if(ranSig>1 || ranSig <0 || class(ranSig)!="numeric"){
+    if(ranSig>1 || ranSig <0 || .getClass(ranSig)!="numeric"){
         stop("The input 'ranSig' is invalid! 'ranSig' should be a positive number and less than 1!\n")
     }
     
-    if(idNumThr<(-1) || class(idNumThr)!="numeric"){
+    if(idNumThr<(-1) || .getClass(idNumThr)!="numeric"){
         stop("The input 'idNumThr' is invalid! 'idNumThr' should be -1 or a positive number!\n")
     }
     
-    if(nThreads<1 || class(nThreads)!="numeric"){
+    if(nThreads<1 || .getClass(nThreads)!="numeric"){
         stop("The input 'nThreads' is invalid! 'nThreads' should be a number and greater than 1!\n")
     }
     

@@ -22,9 +22,15 @@ testFileFormat <- function(inputMat=NULL,sampleAnn=NULL,collapse_mode="maxSD"){
 }
 
 
+.getClass <- function(obj) {
+   cls <- class(obj)
+   return(cls[1])
+}
+
+
 .testCCTFormat <- function(inputMat, collapse_mode="maxSD"){
     
-    if(class(inputMat)=="character"){
+    if(.getClass(inputMat)=="character"){
         if(file_ext(inputMat)!="cct" && file_ext(inputMat)!="cbt"){
             stop("The extension of the input file should be 'cct' or 'cbt'. The detail of the 'cct' or 'cbt' file format can be found in the NetGestalt (www.netgestalt.org)!\n")
         }else{
@@ -40,10 +46,10 @@ testFileFormat <- function(inputMat=NULL,sampleAnn=NULL,collapse_mode="maxSD"){
             }
         }
     }else{
-        if(class(inputMat) != "matrix" && class(inputMat) != "data.frame"){
+        if(.getClass(inputMat) != "matrix" && .getClass(inputMat) != "data.frame"){
             stop("The type of input data should be a matrix or data.frame object. Other types of data are not supported by this package.!\n")
         }else{
-            x <- apply(inputMat,2,function(e) return(class(e)=="numeric" || class(e)=="integer"))
+            x <- apply(inputMat,2,function(e) return(.getClass(e)=="numeric" || .getClass(e)=="integer"))
             y <- all(x==TRUE)
             if(y==FALSE){
                 stop("The input matrix or data.frame object should only contain numeric or integer values.\n")
@@ -64,14 +70,14 @@ testFileFormat <- function(inputMat=NULL,sampleAnn=NULL,collapse_mode="maxSD"){
 
 .testTSIFormat <- function(inputMat,sampleAnn){
     
-    if(class(sampleAnn)=="character"){
+    if(.getClass(sampleAnn)=="character"){
         if(file_ext(sampleAnn)!="tsi"){
             stop("The extension of the input annotation file should be 'tsi'. The detail of the 'tsi' file format can be found in the NetGestalt (www.netgestalt.org)!\n")
         }else{
             sampleAnn <- read.table(sampleAnn,header=TRUE,sep="\t",stringsAsFactors=FALSE,check.names=FALSE)
         }
     }else{
-        if(class(sampleAnn) != "data.frame"){
+        if(.getClass(sampleAnn) != "data.frame"){
             stop("The type of input annotation data should be a data.frame object. Other types of data are not supported by this package.!\n")
         }
     }

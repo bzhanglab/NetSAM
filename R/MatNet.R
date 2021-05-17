@@ -1,3 +1,8 @@
+.getClass <- function(obj) {
+   cls <- class(obj)
+   return(cls[1])
+}
+
 MatNet <-
 function(inputMat, collapse_mode="maxSD", naPer=0.7, meanPer=0.8, varPer=0.8, corrType="spearman", matNetMethod="rank", valueThr=0.5, rankBest=0.003, networkType="signed", netFDRMethod="BH", netFDRThr=0.05, idNumThr=(-1), nThreads=3){
 	
@@ -11,15 +16,15 @@ function(inputMat, collapse_mode="maxSD", naPer=0.7, meanPer=0.8, varPer=0.8, co
     inputMat <- re$inputMat
     inputMat <- as.matrix(inputMat)
     
-    if(naPer>1 || naPer<0 || class(meanPer)!="numeric"){
+    if(naPer>1 || naPer<0 || .getClass(meanPer)!="numeric"){
         stop("The input 'naPer' is invalid! 'naPer' should be a positive number and less than 1!\n")
     }
     
-    if(meanPer>1 || meanPer<0 || class(meanPer)!="numeric"){
+    if(meanPer>1 || meanPer<0 || .getClass(meanPer)!="numeric"){
         stop("The input 'meanPer' is invalid! 'meanPer' should be a positive number and less than 1!\n")
     }
     
-    if(varPer>1 || varPer<0 || class(varPer)!="numeric"){
+    if(varPer>1 || varPer<0 || .getClass(varPer)!="numeric"){
         stop("The input 'varPer' is invalid! 'varPer' should be a positive number and less than 1!\n")
     }
     
@@ -32,7 +37,7 @@ function(inputMat, collapse_mode="maxSD", naPer=0.7, meanPer=0.8, varPer=0.8, co
 		stop("The input 'matNetMethod' is invalid! Please select an option from 'value','rank' and 'directed'!\n")
 	}
     
-    if(valueThr>1 || valueThr<0 || class(valueThr)!="numeric"){
+    if(valueThr>1 || valueThr<0 || .getClass(valueThr)!="numeric"){
         stop("The input 'valueThr' is invalid! 'valueThr' should be a positive number and less than 1!\n")
     }
     
@@ -48,15 +53,15 @@ function(inputMat, collapse_mode="maxSD", naPer=0.7, meanPer=0.8, varPer=0.8, co
 		stop("The input 'netFDRMethod' is invalid! Please select a method from 'holm','hochberg', 'hommel', 'bonferroni', 'BH', 'BY' and 'none'!\n")
 	}
     
-    if(netFDRThr>1 || class(netFDRThr)!="numeric"){
+    if(netFDRThr>1 || .getClass(netFDRThr)!="numeric"){
         stop("The input 'netFDRThr' is invalid! 'netFDRThr' should be a number and less than 1!\n")
     }
     
-    if(idNumThr<(-1) || class(idNumThr)!="numeric"){
+    if(idNumThr<(-1) || .getClass(idNumThr)!="numeric"){
         stop("The input 'idNumThr' is invalid! 'idNumThr' should be -1 or a positive number!\n")
     }
     
-    if(nThreads<1 || class(nThreads)!="numeric"){
+    if(nThreads<1 || .getClass(nThreads)!="numeric"){
         stop("The input 'nThreads' is invalid! 'nThreads' should be a number and greater than 1!\n")
     }
     
