@@ -123,7 +123,7 @@ function(inputMat, collapse_mode="maxSD", naPer=0.7, meanPer=0.8, varPer=0.8, co
     rm(meanG,sdG,inputMat)
     gc()
     
-    enableWGCNAThreads()
+    allowWGCNAThreads(nThreads=nThreads)
 	
     
 	#calculate  correlation

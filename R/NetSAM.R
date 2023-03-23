@@ -243,7 +243,7 @@ NetSAM <- function(inputNetwork, outputFileName, outputFormat="nsm", edgeType="u
     minModule <- 5
   }
 
-  enableWGCNAThreads()
+  allowWGCNAThreads(nThreads=nThreads)
   threNum <- WGCNAnThreads()
   if(threNum>nThreads){
     threNum <- nThreads
