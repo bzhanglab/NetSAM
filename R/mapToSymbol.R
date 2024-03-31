@@ -415,7 +415,7 @@ function(inputNetwork, organism="hsapiens", idType="auto", edgeType="unweighted"
         if(file_ext(inputNetwork)!="net"){
             stop("The extension of the input file should be 'net'!\n")
         }else{
-            network <- read.graph(inputNetwork,format="ncol")
+            network <- read_graph_ncol(inputNetwork)
             if(edgeType=="weighted"){
                 if(is.null(E(network)$weight)){
                     stop("The input network does not contain edge weights. Please add the edge weights or change parameter 'edgeType' to 'unweigthed'!")

@@ -3,6 +3,21 @@
    return(cls[1])
 }
 
+read_graph_ncol <- function(file_path, directed = FALSE) {
+    network_data <- read.table(file_path, header = FALSE)
+
+    if (ncol(network_data) == 3) {
+        colnames(network_data) <- c("from", "to", "weight")
+    } else if (ncol(network_data) == 2) {
+        colnames(network_data) <- c("from", "to")
+    } else {
+        stop("The file format is not supported. Expecting 2 or 3 columns.")
+    }
+    g <- graph_from_data_frame(network_data, directed = directed)
+
+    return(g)
+}
+
 NetAnalyzer <-
 function(inputNetwork, outputFileName, edgeType="unweighted"){
    
@@ -18,7 +33,7 @@ function(inputNetwork, outputFileName, edgeType="unweighted"){
         if(file_ext(inputNetwork)!="net"){
             stop("The extension of the input file should be 'net'!\n")
         }else{
-            network <- read.graph(inputNetwork,format="ncol")
+            network <- read_graph_ncol(inputNetwork)
             if(edgeType=="weighted"){
                 if(is.null(E(network)$weight)){
                     stop("The input network does not contain edge weights. Please add the edge weights or change parameter 'edgeType' to 'unweigthed'!")
