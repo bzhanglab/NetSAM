@@ -179,7 +179,7 @@ function(geneList, organism="hsapiens", idType="auto",verbose=TRUE){
        mart <- useMart("plants_mart",host="plants.ensembl.org")
        m <- try(mart <- useDataset(paste(organism,"_eg_gene",sep=""),mart),silent=TRUE)
    }else{
-       mart <- useMart("ENSEMBL_MART_ENSEMBL",host="www.ensembl.org")
+       mart <- useMart("ENSEMBL_MART_ENSEMBL",host="https://www.ensembl.org")
        m <- try(mart <- useDataset(paste(organism,"_gene_ensembl",sep=""),mart),silent=TRUE)
    }
    
